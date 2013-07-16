@@ -1,0 +1,25 @@
+<polymer-element name="gf-list-view">
+  <template>
+  	<link rel="stylesheet" href="gf-list-view.css">
+  	<ul id="list">
+	</ul>
+  </template>
+
+  <script>
+    Polymer('gf-list-view', {
+    	setAdapter: function(adapter) {
+        while (this.$.list.firstChild) {
+          this.$.list.removeChild(this.$.list.firstChild);
+        }
+
+        var count = adapter.getItemCount();
+        for(var i = 0; i < count; i++) {
+          var element = adapter.getItemElement(i);
+          this.$.list.appendChild(element);
+        }
+      }
+    });
+
+    
+  </script>
+</polymer-element>

@@ -1,0 +1,42 @@
+<polymer-element name="gf-check-card" extends="li">
+  <template>
+  	<link rel="stylesheet" href="gf-check-card.css">
+    <div class="container">
+    <span id="title"></span>
+    <span id="subtitle"></span>
+    <input id="completeCheckbox" type="checkbox" name="checkbox" value="checkbox" on-click="onCompleteChange">
+    <a id="delete" on-click="onDelete"></a>
+    </div>
+  </template>
+
+  <script>
+    var item;
+    Polymer('gf-check-card', {
+    	setItem: function(i) {
+        item = i;
+        this.$.title.innerHTML = item.title; 
+        if(item.subtitle) {
+          this.$.subtitle.innerHTML = item.subtitle; 
+          this.$.subtitle.style.display = "block";
+        } else {
+          this.$.subtitle.style.display = "";
+        }
+        this.$.completeCheckbox.checked = item.checked;
+
+        if(this.$.completeCheckbox.checked) {
+          this.$.title.classList.add('complete');
+        } else {
+          this.$.title.classList.remove('complete');
+        }
+      },
+      onCompleteChange: function() {
+        this.fire('onCompleteChanged', {id: item.id, checked: this.$.completeCheckbox.checked});
+      },
+      onDelete: function() {
+        this.fire('onDelete', {id: item.id});
+      }
+    });
+
+    
+  </script>
+</polymer-element>

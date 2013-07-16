@@ -1,0 +1,33 @@
+<polymer-element name="gf-text-input-field" attributes="placeholder buttonText">
+  <template>
+  	<link rel="stylesheet" href="gf-text-input-field.css">
+  	<div class="container">
+    	<input id="inputField" placeholder="{{placeholder}}" autofocus on-keyup="onKeyUp">
+    	<button id="input-button">{{buttonText}}</button>
+	</div>
+  </template>
+
+  <script>
+  	var ENTER_KEY = 13;
+    var ESC_KEY = 27;
+
+    Polymer('gf-text-input-field', {
+    	buttonText: 'Enter',
+    	onKeyUp: function(e, detail, sender) {
+    		switch (e.keyCode) {
+          		case ENTER_KEY:
+            		// when polyfilling Object.observe, make sure we update immediately
+            		Platform.flush();
+            		this.fire('onValueEntered', {value: sender.value});
+                sender.value = '';
+           			break;
+       			case ESC_KEY: 
+           			sender.value = '';
+          			break;
+        	}
+		}
+    });
+
+    
+  </script>
+</polymer-element>
